@@ -53,6 +53,10 @@ const App = () => {
                 setUserAnswers((prev) => [...prev, answerObject])
             }
         }
+        if (number === TOTAL_QUESTIONS - 1) {
+            setGameOver(true)
+        }
+        console.log('GAME OVER: ', gameOver)
     }
 
     const nextQuestion = () => {
@@ -72,15 +76,24 @@ const App = () => {
                     Build with React & TS by{' '}
                     <a href="mailto:abifranklin@gmail.com"> Abi Franklin </a>
                 </h3>
-                {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-                    <button className="start" onClick={startTrivia}>
-                        Start Quiz
-                    </button>
-                ) : null}
-                {!gameOver ? (
+
+                {!gameOver || number === TOTAL_QUESTIONS - 1 ? (
                     <p className="score">
                         Score: {score}/{TOTAL_QUESTIONS}{' '}
                     </p>
+                ) : null}
+                {gameOver && number === TOTAL_QUESTIONS - 1 ? (
+                    <>
+                        <h1>Game Over</h1>
+                        <button className="start" onClick={startTrivia}>
+                            Start New Quiz
+                        </button>
+                    </>
+                ) : null}
+                {userAnswers.length === 0 ? (
+                    <button className="start" onClick={startTrivia}>
+                        Start Quiz
+                    </button>
                 ) : null}
                 {loading && <p>Loading Questions ...</p>}
                 {!loading && !gameOver && (

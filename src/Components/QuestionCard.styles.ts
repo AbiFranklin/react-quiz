@@ -29,7 +29,7 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
     button {
         cursor: pointer;
         user-select: none;
-        font-size: 0.8rem;
+        font-size: 1rem;
         width: 100%;
         height: 40px;
         margin: 5px 0;
