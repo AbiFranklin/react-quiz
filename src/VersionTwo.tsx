@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { fetchQuizQuestions, QuestionState } from './API'
 import QuestionCard from './Components/QuestionCard'
 import { GlobalStyle, Wrapper } from './App.styles'
+import QuizSettings from './Components/QuizSettings'
 
 export type AnswerObject = {
     question: string
@@ -10,25 +11,22 @@ export type AnswerObject = {
     correctAnswer: string
 }
 
-const TOTAL_QUESTIONS = 3
-
-const App = () => {
+const VersionTwo = () => {
     const [loading, setLoading] = useState(false)
     const [questions, setQuestions] = useState<QuestionState[]>([])
     const [number, setNumber] = useState(0)
     const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
     const [score, setScore] = useState(0)
     const [gameOver, setGameOver] = useState(true)
+    const [category, setCategory] = useState(0)
+    const [difficulty, setDifficulty] = useState('easy')
+    const [numQuestions, setNumQuestions] = useState(3)
 
     const startTrivia = async () => {
         setLoading(true)
         setGameOver(false)
 
-        const newQuestions = await fetchQuizQuestions(
-            TOTAL_QUESTIONS,
-            'easy',
-            0
-        )
+        const newQuestions = await fetchQuizQuestions(numQuestions, 'easy', 0)
 
         setQuestions(newQuestions)
         setScore(0)
@@ -54,14 +52,14 @@ const App = () => {
                 setUserAnswers((prev) => [...prev, answerObject])
             }
         }
-        if (number === TOTAL_QUESTIONS - 1) {
+        if (number === numQuestions - 1) {
             setGameOver(true)
         }
         console.log('GAME OVER: ', gameOver)
     }
 
     const nextQuestion = () => {
-        if (number + 1 === TOTAL_QUESTIONS) {
+        if (number + 1 === numQuestions) {
             setGameOver(true)
         } else {
             setNumber(number + 1)
@@ -72,35 +70,39 @@ const App = () => {
         <>
             <GlobalStyle />
             <Wrapper>
-                <h1>General Knowledge Quiz</h1>
+                <h1>General Knowledge Quiz V2</h1>
                 <h3>
                     Build with React & TS by{' '}
                     <a href="mailto:abifranklin@gmail.com"> Abi Franklin </a>
                 </h3>
 
-                {!gameOver || number === TOTAL_QUESTIONS - 1 ? (
+                {!gameOver || number === numQuestions - 1 ? (
                     <p className="score">
-                        Score: {score}/{TOTAL_QUESTIONS}{' '}
+                        Score: {score}/{numQuestions}{' '}
                     </p>
                 ) : null}
-                {gameOver && number === TOTAL_QUESTIONS - 1 ? (
+                {gameOver && number === numQuestions - 1 ? (
                     <>
                         <h1>Game Over</h1>
+                        <QuizSettings />
                         <button className="start" onClick={startTrivia}>
-                            Start New Quiz
+                            Start Quiz
                         </button>
                     </>
                 ) : null}
-                {userAnswers.length === 0 ? (
-                    <button className="start" onClick={startTrivia}>
-                        Start Quiz
-                    </button>
+                {userAnswers.length === 0 && questions.length === 0 ? (
+                    <>
+                        <QuizSettings />
+                        <button className="start" onClick={startTrivia}>
+                            Start Quiz
+                        </button>
+                    </>
                 ) : null}
                 {loading && <p>Loading Questions ...</p>}
                 {!loading && questions.length !== 0 && (
                     <QuestionCard
                         questionNum={number + 1}
-                        totalQuestions={TOTAL_QUESTIONS}
+                        totalQuestions={numQuestions}
                         question={questions[number].question}
                         answers={questions[number].answers}
                         userAnswer={
@@ -112,7 +114,7 @@ const App = () => {
                 {!gameOver &&
                 !loading &&
                 userAnswers.length === number + 1 &&
-                number !== TOTAL_QUESTIONS - 1 ? (
+                number !== numQuestions - 1 ? (
                     <button className="next" onClick={nextQuestion}>
                         Next Question
                     </button>
@@ -133,4 +135,4 @@ const App = () => {
     )
 }
 
-export default App
+export default VersionTwo
