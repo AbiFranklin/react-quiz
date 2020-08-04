@@ -26,8 +26,11 @@ const VersionTwo = () => {
         setLoading(true)
         setGameOver(false)
 
-        const newQuestions = await fetchQuizQuestions(numQuestions, 'easy', 0)
-
+        const newQuestions = await fetchQuizQuestions(
+            numQuestions,
+            difficulty,
+            category
+        )
         setQuestions(newQuestions)
         setScore(0)
         setUserAnswers([])
@@ -84,7 +87,11 @@ const VersionTwo = () => {
                 {gameOver && number === numQuestions - 1 ? (
                     <>
                         <h1>Game Over</h1>
-                        <QuizSettings />
+                        <QuizSettings
+                            setNumQuestions={setNumQuestions}
+                            setCategory={setCategory}
+                            setDifficulty={setDifficulty}
+                        />
                         <button className="start" onClick={startTrivia}>
                             Start Quiz
                         </button>
@@ -92,7 +99,11 @@ const VersionTwo = () => {
                 ) : null}
                 {userAnswers.length === 0 && questions.length === 0 ? (
                     <>
-                        <QuizSettings />
+                        <QuizSettings
+                            setNumQuestions={setNumQuestions}
+                            setCategory={setCategory}
+                            setDifficulty={setDifficulty}
+                        />
                         <button className="start" onClick={startTrivia}>
                             Start Quiz
                         </button>
