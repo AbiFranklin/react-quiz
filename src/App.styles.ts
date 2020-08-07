@@ -72,7 +72,9 @@ export const Wrapper = styled.div`
     }
 
     .footer {
-        position: absolute;
+        width: 20%;
+        position: fixed;
         bottom: 10px;
+        right: 0px;
     }
 `

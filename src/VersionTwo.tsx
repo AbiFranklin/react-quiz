@@ -78,26 +78,16 @@ const VersionTwo = () => {
                     Build with React & TS by{' '}
                     <a href="mailto:abifranklin@gmail.com"> Abi Franklin </a>
                 </h3>
-
-                {!gameOver || number === numQuestions - 1 ? (
+                {console.log(questions.length, userAnswers.length)}
+                {!gameOver ? (
                     <p className="score">
                         Score: {score}/{numQuestions}{' '}
                     </p>
                 ) : null}
-                {gameOver && number === numQuestions - 1 ? (
-                    <>
-                        <h1>Game Over</h1>
-                        <QuizSettings
-                            setNumQuestions={setNumQuestions}
-                            setCategory={setCategory}
-                            setDifficulty={setDifficulty}
-                        />
-                        <button className="start" onClick={startTrivia}>
-                            Start Quiz
-                        </button>
-                    </>
+                {gameOver && userAnswers.length !== 0 ? (
+                    <h1>Game Over</h1>
                 ) : null}
-                {userAnswers.length === 0 && questions.length === 0 ? (
+                {gameOver ? (
                     <>
                         <QuizSettings
                             setNumQuestions={setNumQuestions}
@@ -122,10 +112,7 @@ const VersionTwo = () => {
                         callback={checkAnswer}
                     />
                 )}
-                {!gameOver &&
-                !loading &&
-                userAnswers.length === number + 1 &&
-                number !== numQuestions - 1 ? (
+                {!gameOver && !loading && userAnswers.length === number + 1 ? (
                     <button className="next" onClick={nextQuestion}>
                         Next Question
                     </button>

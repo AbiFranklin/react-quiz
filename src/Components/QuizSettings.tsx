@@ -53,19 +53,19 @@ const QuizSettings: React.FC<Props> = ({
                     onChange={(e) => setNumQuestions(e.currentTarget.value)}
                 />
                 <br />
-                <label>Categories (select one):</label>
-                {Categories.map((category, index) => (
-                    <>
-                        <input
-                            type="radio"
-                            id={category}
-                            name="category"
-                            value={index + 9}
-                            onChange={(e) => setCategory(e.currentTarget.value)}
-                        />
-                        <label>{category}</label>{' '}
-                    </>
-                ))}
+                <label>Categories (select one): </label>
+                <select
+                    id="category"
+                    name="category"
+                    onChange={(e) => setCategory(e.currentTarget.value)}
+                >
+                    {Categories.map((category, index) => (
+                        <>
+                            <option value={index + 9}>{category}</option>
+                        </>
+                    ))}
+                </select>
+                <br />
                 <label>Difficulty: </label>
                 {Difficulty.map((diff) => (
                     <>
