@@ -1,5 +1,10 @@
 import React from 'react'
 import { Wrapper } from './QuestionCard.styles'
+import styled from 'styled-components'
+
+const Option = styled.div`
+    margin-top: 10px;
+`
 
 const Categories = [
     'General Knowledge',
@@ -52,35 +57,37 @@ const QuizSettings: React.FC<Props> = ({
                     name="questionNum"
                     onChange={(e) => setNumQuestions(e.currentTarget.value)}
                 />
-                <br />
-                <label>Categories (select one): </label>
-                <select
-                    id="category"
-                    name="category"
-                    onChange={(e) => setCategory(e.currentTarget.value)}
-                >
-                    {Categories.map((category, index) => (
+                <Option>
+                    <label>Categories (select one): </label>
+                    <select
+                        id="category"
+                        name="category"
+                        onChange={(e) => setCategory(e.currentTarget.value)}
+                    >
+                        {Categories.map((category, index) => (
+                            <>
+                                <option value={index + 9}>{category}</option>
+                            </>
+                        ))}
+                    </select>
+                </Option>
+                <Option>
+                    <label>Difficulty: </label>
+                    {Difficulty.map((diff) => (
                         <>
-                            <option value={index + 9}>{category}</option>
+                            <input
+                                type="radio"
+                                id={diff}
+                                name="diffuculty"
+                                value={diff.toLowerCase()}
+                                onChange={(e) =>
+                                    setDifficulty(e.currentTarget.value)
+                                }
+                            />
+                            <label>{diff}</label>{' '}
                         </>
                     ))}
-                </select>
-                <br />
-                <label>Difficulty: </label>
-                {Difficulty.map((diff) => (
-                    <>
-                        <input
-                            type="radio"
-                            id={diff}
-                            name="diffuculty"
-                            value={diff.toLowerCase()}
-                            onChange={(e) =>
-                                setDifficulty(e.currentTarget.value)
-                            }
-                        />
-                        <label>{diff}</label>{' '}
-                    </>
-                ))}
+                </Option>
             </form>
         </Wrapper>
     )
