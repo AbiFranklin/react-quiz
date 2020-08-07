@@ -91,7 +91,7 @@ const App = () => {
                         </button>
                     </>
                 ) : null}
-                {userAnswers.length === 0 ? (
+                {gameOver && userAnswers.length === 0 ? (
                     <button className="start" onClick={startTrivia}>
                         Start Quiz
                     </button>

@@ -79,7 +79,9 @@ const VersionTwo = () => {
                     <a href="mailto:abifranklin@gmail.com"> Abi Franklin </a>
                 </h3>
                 {console.log(questions.length, userAnswers.length)}
-                {!gameOver ? (
+                {!gameOver ||
+                (userAnswers.length === questions.length &&
+                    userAnswers.length > 0) ? (
                     <p className="score">
                         Score: {score}/{numQuestions}{' '}
                     </p>
